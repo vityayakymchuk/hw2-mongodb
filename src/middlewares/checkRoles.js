@@ -1,40 +1,22 @@
 import createHttpError from 'http-errors';
-
 import { ContactsCollection } from '../db/models/contacts.js';
-import { ROLES } from '../constants/constans.js';
 
-export const checkRoles =
-  (...roles) =>
-  async (req, res, next) => {
-    const { user } = req;
-    if (!user) {
-      next(createHttpError(401));
-      return;
-    }
+export const checkUser = async (req, res, next) => {
 
-    const { role } = user;
-    if (roles.includes(ROLES.TEACHER) && role === ROLES.TEACHER) {
-      next();
-      return;
-    }
+    const { _id: userId } = req.user;
 
-    if (roles.includes(ROLES.PARENT) && role === ROLES.PARENT) {
-      const { studentId } = req.params;
-      if (!studentId) {
-        next(createHttpError(403));
+    const { contactId } = req.params;
+
+    if (!userId) {
+        next(createHttpError(401, 'User not authenticated'));
         return;
-      }
-
-      const student = await ContactsCollection.findOne({
-        _id: studentId,
-        parentId: user._id,
-      });
-
-      if (student) {
-        next();
-        return;
-      }
     }
 
-    next(createHttpError(403));
-  };
+    const contact = await ContactsCollection.findOne({ _id: contactId, userId });
+
+    if (!contact) {
+        return next(createHttpError(404, 'Contact not found'));
+    }
+
+    next(createHttpError(403, 'Forbidden: You don`t have access to this contact'));
+};

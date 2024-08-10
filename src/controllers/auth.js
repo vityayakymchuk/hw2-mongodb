@@ -29,6 +29,7 @@ export const loginUserController = async (req, res) => {
       accessToken: session.accessToken,
     },
   });
+    
 };
 
 export const logoutUserController = async (req, res) => {
@@ -40,6 +41,7 @@ export const logoutUserController = async (req, res) => {
   res.clearCookie('refreshToken');
 
   res.status(204).send();
+
 };
 
 const setupSession = (res, session) => {

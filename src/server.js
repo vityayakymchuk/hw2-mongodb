@@ -12,7 +12,6 @@ export function setupServer() {
 const app = express();
 const PORT = Number(env('PORT', '3000'));
 
-app.use(router);
 app.use(cookieParser());
 
 app.use(
@@ -22,8 +21,10 @@ app.use(
     },
   }),
 );
-
 app.use(cors());
+
+app.use(router);
+
 app.use('*', notFoundHandler);
 app.use(errorHandler);
 

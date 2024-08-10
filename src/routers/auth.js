@@ -5,6 +5,7 @@ import { loginUserSchema, registerUserSchema } from '../validations/auth.js';
 import { validateBody } from '../utils/validateBody.js';
 import express from 'express';
 
+
 const router = Router();
 const jsonParser = express.json();
 
@@ -21,6 +22,7 @@ router.post(
   validateBody(loginUserSchema),
   ctrlWrapper(loginUserController),
 );
+
 
 router.post('/logout', ctrlWrapper(logoutUserController));
 

@@ -18,9 +18,15 @@ app.use(
   pino({
     transport: {
       target: 'pino-pretty',
+      options: {
+        colorize: true,
+        translateTime: 'SYS:standard',
+      },
     },
+    level: 'info',
   }),
-);
+  );
+
 app.use(cors());
 
 app.use(router);

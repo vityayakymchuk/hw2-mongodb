@@ -1,5 +1,5 @@
 import express from 'express';
-import pino from 'pino-http';
+// import pino from 'pino-http';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { env } from './utils/env.js';
@@ -14,13 +14,13 @@ const PORT = Number(env('PORT', '3000'));
 
 app.use(cookieParser());
 
-app.use(
-  pino({
-    transport: {
-      target: 'pino-pretty',
-    },
-  }),
-);
+// app.use(
+//   pino({
+//     transport: {
+//       target: 'pino-pretty',
+//     },
+//   }),
+// );
 app.use(cors());
 
 app.use(router);

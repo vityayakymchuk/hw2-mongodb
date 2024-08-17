@@ -1,0 +1,73 @@
+tags:
+  - Contacts
+summary: Replace contact by id
+operationId: replaceContact
+description: 'Replace contact by id'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '66981b0bd096d6f0cc838192'
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          name:
+            description: 'Contact name'
+            type: string
+            example: 'Bill Murray'
+          phoneNumber:
+            description: 'Contact phone number'
+            type: string
+            example: '+380000000008'
+          email:
+            description: 'Contact email'
+            type: string
+            example: 'vasyl9@example.com'
+          isFavourite:
+            description: 'Contact type. Can be favourite or not.'
+            type: boolean
+            example: true
+          contactType:
+            description: 'Contact type.'
+            type: string
+            enum: ['work', 'home', 'personal']
+          photo:
+            description: 'Link to photo of contact'
+            type: string
+responses:
+  '200':
+    description: 'Replace contact by id'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully replaced a contact!
+            data:
+              type: object
+              $ref: '../../../components/schemas/contact.yaml'
+  '400':
+    $ref: '../../../components/responses/400.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
